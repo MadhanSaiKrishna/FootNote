@@ -43,20 +43,54 @@ source ~/.bashrc
    flutter run
    ```
 
-## 3. Linux Desktop Setup (Ubuntu)
-1. **Enable Linux Desktop**:
+## 3. Server Setup (Raspberry Pi / Linux)
+This guide assumes you are running the backend on a headless server (e.g., Raspberry Pi) connected to your LAN.
+
+### Minimum Specs (Raspberry Pi)
+- **Model**: Raspberry Pi 3B+ or Raspberry Pi 4 (Any RAM model)
+- **RAM**: 1GB+ (Sufficient since AI inference is offloaded to Gemini API)
+- **OS**: Raspberry Pi OS Bookworm (64-bit Lite)
+- **Storage**: 16GB+ microSD card
+
+
+### Server Installation
+1. **Clone & Setup**:
    ```bash
-   flutter config --enable-linux-desktop
+   git clone https://github.com/MadhanSaiKrishna/FootNote.git
+   cd FootNote
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r backend/requirements.txt
    ```
-2. **Run on Linux**:
-   Ensure the backend is running (`uvicorn ...`). Then:
+2. **Run as Service (Systemd)**:
+   Create a service file to keep it running 24/7.
    ```bash
-   flutter run -d linux
+   sudo nano /etc/systemd/system/footnote.service
+   ```
+   Add:
+   ```ini
+   [Unit]
+   Description=Footnote Backend
+   After=network.target
+
+   [Service]
+   User=pi
+   WorkingDirectory=/home/pi/FootNote
+   ExecStart=/home/pi/FootNote/venv/bin/uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+   Restart=always
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   Enable it:
+   ```bash
+   sudo systemctl enable --now footnote.service
    ```
 
-### Linux Notes
-- **API URL**: The app automatically uses `http://localhost:8000` when running on Linux.
-- **Window Sizing**: The UI is constrained to a maximum width of 800px to maintain readability on large screens.
+### Linux Desktop Client
+If you are developing the *frontend* on a Linux Desktop:
+1. **Enable Desktop**: `flutter config --enable-linux-desktop`
+2. **Run**: `flutter run -d linux`
 
 ## 4. Execution Roadmap
 
@@ -73,8 +107,8 @@ source ~/.bashrc
 | | Configurable API URL (LAN support) | ✅ Done |
 | | **Initialize & Fix Android Build** | ⬜ Pending |
 | **4. Desktop** | Linux desktop validation & layout check | ⬜ Pending |
-| **5. Deployment** | **Deploy & Test on Local Ubuntu Server** | ⬜ Pending |
-| | **Setup Android Connection (LAN/Tailscale)** | ⬜ Pending |
+| **5. Deployment** | **Setup Raspberry Pi Server (Headless)** | ⬜ Pending |
+| | **Configure Tailscale/VPN Access** | ⬜ Pending |
 | | **Build & Run Signed APK on Phone** | ⬜ Pending |
 | | Upload to GitHub Releases | ⬜ Pending |
 

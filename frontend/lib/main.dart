@@ -3,11 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'screens/feed_screen.dart';
 
 void main() {
-  runApp(const AstrolitApp());
+  runApp(const FootnoteApp());
 }
 
-class AstrolitApp extends StatelessWidget {
-  const AstrolitApp({super.key});
+class FootnoteApp extends StatelessWidget {
+  const FootnoteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,18 @@ class AstrolitApp extends StatelessWidget {
         brightness: Brightness.dark,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
+          seedColor: Colors.deepPurple,
           brightness: Brightness.dark,
+          surface: const Color(0xFF000000), // OLED Black
         ),
         textTheme: GoogleFonts.interTextTheme(
           ThemeData.dark().textTheme,
         ),
-        scaffoldBackgroundColor: const Color(0xFF121212),
+        scaffoldBackgroundColor: const Color(0xFF000000), // OLED Black
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF000000),
+          surfaceTintColor: Colors.transparent,
+        ),
       ),
       home: const FeedScreen(),
     );
