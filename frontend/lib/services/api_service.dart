@@ -9,9 +9,18 @@ class ApiService {
 
   ApiService({this.useMockData = false});
 
+  // TODO: Update this to your computer's LAN IP if running on a physical phone.
+  // Run `hostname -I` in terminal to find it.
+  static const String serverIp = '172.22.160.200';
+
   String get baseUrl {
     if (kIsWeb) return 'http://localhost:8000';
-    if (Platform.isAndroid) return 'http://10.0.2.2:8000';
+    if (Platform.isAndroid) {
+      // Use 10.0.2.2 for Android Emulator, but physical device needs real LAN IP
+      const bool isEmulator = false; // Set to true if using emulator
+      if (isEmulator) return 'http://10.0.2.2:8000';
+      return 'http://$serverIp:8000';
+    }
     return 'http://localhost:8000'; // Linux, macOS, Windows
   }
 
