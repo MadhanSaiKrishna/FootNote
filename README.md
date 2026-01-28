@@ -8,7 +8,7 @@ Footnote is a citation-first, distraction-free research reader for astronomy, sp
 - **Scrollable Feed**: Concise research summaries with explicit citations.
 - **Source Access**: Direct links to original PDFs and source materials.
 - **Focused UI**: Dark-mode, typography-centric design without ads or algorithmic manipulation.
-- **Offline Development**: Mock-data mode for UI testing.
+
 
 ## Design Principles
 - **Citation First**: No claims without sources.

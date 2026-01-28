@@ -1,4 +1,4 @@
-# Footnote Project Instructions
+# Footnote Developer Guide
 
 ## Prerequisites
 - Python 3.10+
@@ -44,18 +44,11 @@ source ~/.bashrc
    ```
 
 ## 3. Linux Desktop Setup (Ubuntu)
-Since this project was generated in an environment without the Linux toolchain, you must enable it on your machine.
-
 1. **Enable Linux Desktop**:
    ```bash
    flutter config --enable-linux-desktop
    ```
-2. **Add Linux Support to Project**:
-   ```bash
-   cd frontend
-   flutter create --platforms=linux .
-   ```
-3. **Run on Linux**:
+2. **Run on Linux**:
    Ensure the backend is running (`uvicorn ...`). Then:
    ```bash
    flutter run -d linux
@@ -65,9 +58,26 @@ Since this project was generated in an environment without the Linux toolchain, 
 - **API URL**: The app automatically uses `http://localhost:8000` when running on Linux.
 - **Window Sizing**: The UI is constrained to a maximum width of 800px to maintain readability on large screens.
 
-## 4. Mock Data Mode
-If the backend is not running or unreachable, click the **Bug Icon** in the top right of the app bar. This will toggle "Mock Data Mode" and display sample papers.
+## 4. Execution Roadmap
 
-## Troubleshooting
-- **API Connection Error**: Android Emulator uses `10.0.2.2` to access localhost. This is configured in `frontend/lib/services/api_service.dart`. If running on a physical device, change this to your computer's local IP address (e.g., `192.168.1.X`).
+| Category | Task | Status |
+| :--- | :--- | :--- |
+| **1. Project Basics** | Finalize project name & content scope | ✅ Done |
+| | Fix Android package labeling | ✅ Done |
+| **2. Backend** | **Add proper paper sources (arXiv API)** | ⬜ Pending |
+| | **Fix Scheduler (Automated Fetching)** | ⬜ Pending |
+| | **Refine Gemini Summaries** | ⬜ Pending |
+| | Expose stable API endpoints | ✅ Done |
+| **3. Frontend** | **Refine UI & Navigation (Linux First)** | ⬜ Pending |
+| | PDF/Source opening integration | ✅ Done |
+| | Configurable API URL (LAN support) | ✅ Done |
+| | **Initialize & Fix Android Build** | ⬜ Pending |
+| **4. Desktop** | Linux desktop validation & layout check | ⬜ Pending |
+| **5. Deployment** | **Deploy & Test on Local Ubuntu Server** | ⬜ Pending |
+| | **Setup Android Connection (LAN/Tailscale)** | ⬜ Pending |
+| | **Build & Run Signed APK on Phone** | ⬜ Pending |
+| | Upload to GitHub Releases | ⬜ Pending |
+
+## 5. Troubleshooting
+- **API Connection Error**: Android Emulator uses `10.0.2.2` to access localhost. This is configured in `frontend/lib/services/api_service.dart`. If running on a physical device, update `serverIp` in that file.
 - **PDF Not Opening**: Ensure an app capable of opening PDFs is installed on the emulator/device.

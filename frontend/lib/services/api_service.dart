@@ -5,9 +5,7 @@ import 'package:http/http.dart' as http;
 import '../models/paper.dart';
 
 class ApiService {
-  final bool useMockData;
-
-  ApiService({this.useMockData = false});
+  ApiService();
 
   // TODO: Update this to your computer's LAN IP if running on a physical phone.
   // Run `hostname -I` in terminal to find it.
@@ -25,10 +23,6 @@ class ApiService {
   }
 
   Future<List<Paper>> fetchFeed() async {
-    if (useMockData) {
-      return _getMockPapers();
-    }
-
     try {
       final response = await http.get(Uri.parse('$baseUrl/feed'));
 
@@ -41,42 +35,8 @@ class ApiService {
     } catch (e) {
       // Fallback or rethrow based on UX preference
       print('Error fetching feed: $e');
-      // For now, if connection fails, we might want to show mock data or empty state
       // Rethrowing to let the UI handle the error state
       throw e;
     }
-  }
-
-  List<Paper> _getMockPapers() {
-    return [
-      Paper(
-        id: 1,
-        title: "VGGT-SLAM 2.0: Real time Dense Feed-forward Scene Reconstruction",
-        summaryPoints: [
-          "Uses dense feed-forward scene reconstruction.",
-          "Improves real-time performance on various datasets.",
-          "Citation: [Maggio et al., 2026]"
-        ],
-        authors: ["Dominic Maggio", "Luca Carlone"],
-        publishedDate: "2026-01-27",
-        sourceUrl: "http://arxiv.org/abs/2601.19887v1",
-        pdfUrl: "https://arxiv.org/pdf/2601.19887v1",
-        categories: ["cs.CV", "cs.RO"],
-      ),
-      Paper(
-        id: 2,
-        title: "Interstellar Propulsion via Laser Arrays",
-        summaryPoints: [
-          "Proposes a new laser array configuration for light sails.",
-          "Achieves 20% efficiency gain over previous models.",
-          "Requires new material science breakthroughs [Smith, 2025]."
-        ],
-        authors: ["J. Doe", "A. Einstein"],
-        publishedDate: "2026-01-28",
-        sourceUrl: "http://nasa.gov",
-        pdfUrl: null,
-        categories: ["physics.space-ph"],
-      ),
-    ];
   }
 }

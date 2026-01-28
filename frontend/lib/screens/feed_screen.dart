@@ -11,8 +11,6 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  // Toggle this to true to force mock data usage
-  bool _useMockData = false; 
   late Future<List<Paper>> _feedFuture;
   final ApiService _apiService = ApiService();
 
@@ -24,7 +22,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   void _loadFeed() {
     setState(() {
-      _feedFuture = ApiService(useMockData: _useMockData).fetchFeed();
+      _feedFuture = _apiService.fetchFeed();
     });
   }
 
@@ -35,20 +33,6 @@ class _FeedScreenState extends State<FeedScreen> {
         title: const Text("Footnote"),
         backgroundColor: Colors.transparent,
         actions: [
-          // Hidden debug toggle for mock mode
-          IconButton(
-            icon: Icon(_useMockData ? Icons.bug_report : Icons.bug_report_outlined),
-            tooltip: 'Toggle Mock Data',
-            onPressed: () {
-              setState(() {
-                _useMockData = !_useMockData;
-                _loadFeed();
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Mock Data: ${_useMockData ? 'ON' : 'OFF'}')),
-              );
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadFeed,
@@ -69,15 +53,6 @@ class _FeedScreenState extends State<FeedScreen> {
                    const SizedBox(height: 16),
                    Text("Error loading feed.\n${snapshot.error}", textAlign: TextAlign.center),
                    const SizedBox(height: 16),
-                   ElevatedButton(
-                     onPressed: () {
-                        setState(() {
-                          _useMockData = true; // Suggest switching to mock data on error
-                          _loadFeed();
-                        });
-                     }, 
-                     child: const Text("Try Mock Data Mode")
-                   ),
                    TextButton(onPressed: _loadFeed, child: const Text("Retry"))
                  ],
                ),
