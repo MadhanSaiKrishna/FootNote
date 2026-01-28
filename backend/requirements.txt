@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+requests
+feedparser==6.0.10
+python-multipart
+google-generativeai
+apscheduler
+python-dotenv
